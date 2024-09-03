@@ -20,3 +20,11 @@ def earthquake_metric_function(df, eq1_event_id, eq2_event_id, W_mag, W_depth, W
                     distance_diff * W_distance +
                     time_diff_hours * W_time)
     return weighted_sum
+
+
+# W_mag, W_depth, W_distance, W_time
+def vectorized_earthquake_metric_function(mag_diff, depth_diff, distance_diff, time_diff, weights):
+    return (weights[0] * (10 ** mag_diff) +
+            weights[1] * depth_diff +
+            weights[2] * distance_diff +
+            weights[3] * time_diff)
