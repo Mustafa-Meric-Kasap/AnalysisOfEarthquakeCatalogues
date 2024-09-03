@@ -1,4 +1,4 @@
-from math_utils import haversine
+import src.util.math_utils as math_utils
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 from datetime import datetime
@@ -12,7 +12,7 @@ def distance_filter(df, event_id, radius_km=10):
     event_lat = get_value_from_eid(df, event_id, "Latitude")
     event_lon = get_value_from_eid(df, event_id,"Longitude")
 
-    distances = df.apply(lambda eq: haversine(event_lat, event_lon, eq['Latitude'], eq['Longitude']), axis=1)
+    distances = df.apply(lambda eq: math_utils.haversine(event_lat, event_lon, eq['Latitude'], eq['Longitude']), axis=1)
     mask = distances <= radius_km
     filtered_df = df[mask].copy()
     return filtered_df
