@@ -64,6 +64,9 @@ def past_earthquakes_filter(df, event_id, num_earthquakes=30):
     past_earthquakes_sorted = past_earthquakes.sort_values(by='Datetime', ascending=False)
     filtered_df = past_earthquakes_sorted.head(num_earthquakes)
 
+    # Reverse the order of filtered_df
+    filtered_df = filtered_df.iloc[::-1]
+
     # Get the row corresponding to the event ID
     event_row = df_copy[df_copy['Event ID'] == event_id]
 
