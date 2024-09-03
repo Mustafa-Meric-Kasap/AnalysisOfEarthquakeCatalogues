@@ -1,6 +1,6 @@
-from earthquake_filter_utils import get_value_from_eid
-from math_utils import haversine
-from math_utils import date_time_diff_in_hours
+from src.util.earthquake_filter_utils import get_value_from_eid
+from src.util.math_utils import haversine
+from src.util.math_utils import date_time_diff_in_hours
 
 def earthquake_metric_function(df, eq1_event_id, eq2_event_id, W_mag, W_depth, W_distance, W_time):
     lat1 = get_value_from_eid(df, eq1_event_id, "Latitude")
