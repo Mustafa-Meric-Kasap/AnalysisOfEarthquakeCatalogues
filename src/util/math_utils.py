@@ -14,9 +14,15 @@ def haversine(lat1: float, lon1: float, lat2: float, lon2: float, r = 6371.0):
     distance = c * r
     return distance
 
-def date_time_diff_in_hours(datetime_str_1, datetime_str_2):
-    datetime1 = datetime.strptime(datetime_str_1, "%d/%m/%Y %H:%M:%S")
-    datetime2 = datetime.strptime(datetime_str_2, "%d/%m/%Y %H:%M:%S")
-    time_diff_h = abs((datetime1 - datetime2).total_seconds()) / 3600.
-    return time_diff_h
+def date_time_diff_in_hours(datetime1, datetime2):
+    # Check if the inputs are numpy.datetime64; if so, handle them accordingly
+    if isinstance(datetime1, np.datetime64) and isinstance(datetime2, np.datetime64):
+        # Calculate the absolute difference in seconds
+        time_diff_seconds = np.abs((datetime1 - datetime2).astype('timedelta64[s]').astype(int))
+    else:
+        # Otherwise, assume they are Python datetime objects and handle them as before
+        time_diff_seconds = abs((datetime1 - datetime2).total_seconds())
 
+    # Convert the difference from seconds to hours
+    time_diff_h = time_diff_seconds / 3600.0
+    return time_diff_h
