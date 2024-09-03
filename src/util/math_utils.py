@@ -1,5 +1,5 @@
 import numpy as np
-
+from datetime import datetime
 def haversine(lat1: float, lon1: float, lat2: float, lon2: float, r = 6371.0):
     # Convert latitude and longitude from degrees to radians
     lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
@@ -13,3 +13,10 @@ def haversine(lat1: float, lon1: float, lat2: float, lon2: float, r = 6371.0):
     # Calculate the distance
     distance = c * r
     return distance
+
+def date_time_diff_in_hours(datetime_str_1, datetime_str_2):
+    datetime1 = datetime.strptime(datetime_str_1, "%d/%m/%Y %H:%M:%S")
+    datetime2 = datetime.strptime(datetime_str_2, "%d/%m/%Y %H:%M:%S")
+    time_diff_h = abs((datetime1 - datetime2).total_seconds()) / 3600.
+    return time_diff_h
+
