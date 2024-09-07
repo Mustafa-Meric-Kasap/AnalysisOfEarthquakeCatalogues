@@ -74,3 +74,32 @@ def past_earthquakes_filter(df, event_id, num_earthquakes=30):
     result = pd.concat([filtered_df, event_row], ignore_index=True)
 
     return result
+
+
+def future_earthquakes_filter(df, event_id, num_earthquakes=30):
+    # Get the datetime for the event using the event ID
+    event_datetime = get_value_from_eid(df, event_id, "Datetime")
+
+    # Ensure the event_datetime is in pandas Timestamp format
+    if isinstance(event_datetime, pd.Timestamp):
+        event_datetime = pd.to_datetime(event_datetime)
+    else:
+        event_datetime = pd.to_datetime(str(event_datetime))
+
+    df_copy = df.copy()
+
+    # Ensure the 'Datetime' column is in pandas datetime format
+    df_copy['Datetime'] = pd.to_datetime(df_copy['Datetime'])
+
+    # Filter future earthquakes
+    future_earthquakes = df_copy[df_copy['Datetime'] > event_datetime]
+    future_earthquakes_sorted = future_earthquakes.sort_values(by='Datetime', ascending=True)
+    filtered_df = future_earthquakes_sorted.head(num_earthquakes)
+
+    # Get the row corresponding to the event ID
+    event_row = df_copy[df_copy['Event ID'] == event_id]
+
+    # Concatenate the event row and the future earthquakes
+    result = pd.concat([event_row, filtered_df], ignore_index=True)
+
+    return result
