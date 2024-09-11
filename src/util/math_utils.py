@@ -21,7 +21,7 @@ def date_time_diff_in_hours(datetime1, datetime2):
         time_diff_seconds = np.abs((datetime1 - datetime2).astype('timedelta64[s]').astype(int))
     else:
         # Otherwise, assume they are Python datetime objects and handle them as before
-        time_diff_seconds = abs((datetime1 - datetime2).total_seconds())
+        time_diff_seconds = (datetime1 - datetime2).total_seconds()
 
     # Convert the difference from seconds to hours
     time_diff_h = time_diff_seconds / 3600.0
